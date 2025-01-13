@@ -15,4 +15,10 @@ const LoginUser = async (email, password) => {
   return user;
 };
 
-export default { LoginUser };
+const RegisterUser = async (user) => {
+  console.log(user); //{ name: 'anh', email: 'lasw@gmail.com', password: '@Anh12346' }
+
+  return await UserService.CreateUser(user);
+};
+
+export default { LoginUser, RegisterUser };

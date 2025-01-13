@@ -10,9 +10,9 @@ import { User } from "../models/index.js";
 const CreateUser = async (user) => {
   const user_info = await GetUserByEmail(user.email);
   if (user_info) {
-    throw new Error("User already exists");
+    throw new Error("email already exists");
   }
-  return await User.create(user_info);
+  return await User.create(user);
 };
 
 /**

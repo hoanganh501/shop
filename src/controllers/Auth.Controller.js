@@ -5,4 +5,9 @@ const Login = async (req, res) => {
   res.status(200).send(user);
 };
 
-export default { Login };
+const Register = async (req, res) => {
+  const user = await AuthService.RegisterUser(req.body);
+  res.status(201).send(user);
+};
+
+export default { Login, Register };

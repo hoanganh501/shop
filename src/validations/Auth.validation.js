@@ -7,4 +7,11 @@ const Login = {
   }),
 };
 
-export default { Login };
+const Register = {
+  body: Joi.object().keys({
+    name: Joi.string().required(),
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+  }),
+};
+export default { Login, Register };

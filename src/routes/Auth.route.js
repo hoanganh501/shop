@@ -8,4 +8,7 @@ router
   .route("/login")
   .post(validate(AuthValidation.Login), AuthController.Login);
 
+router
+  .route("/register")
+  .post(validate(AuthValidation.Register), AuthController.Register);
 export default router;
