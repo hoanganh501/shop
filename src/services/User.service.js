@@ -8,7 +8,11 @@ import { User } from "../models/index.js";
  */
 
 const CreateUser = async (user) => {
-  return await User.create(user);
+  const user_info = await GetUserByEmail(user.email);
+  if (user_info) {
+    throw new Error("User already exists");
+  }
+  return await User.create(user_info);
 };
 
 /**
@@ -28,11 +32,7 @@ const GetUserById = async (id) => {
  * @returns {Promise<Object>} - A promise that resolves to the user object if found, null otherwise.
  */
 const GetUserByEmail = async (email) => {
-  const user = await User.findOne({ email });
-  if (!user) {
-    return new Error("User not found");
-  }
-  return user;
+  return await User.findOne({ email });
 };
 
 /**
@@ -45,6 +45,9 @@ const GetUserByEmail = async (email) => {
 
 const UpdateUser = async (id, user) => {
   const user_info = await GetUserById(id);
+  if (!user_info) {
+    return new Error("User not found");
+  }
   user_info.set(user);
   return await user_info.save();
 };

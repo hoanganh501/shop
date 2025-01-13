@@ -7,6 +7,9 @@ const CreateUser = async (req, res) => {
 
 const GetUserById = async (req, res) => {
   const user = await UserService.GetUserById(req.params.id);
+  if (!user) {
+    throw new Error("User not found");
+  }
   return res.status(200).send(user);
 };
 
