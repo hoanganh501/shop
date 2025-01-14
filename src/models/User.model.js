@@ -2,42 +2,47 @@ import mongoose from "mongoose";
 import ROLES from "../config/type.js";
 import bcrypt from "bcryptjs";
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: (v) => {
-        const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        return re.test(v);
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: (v) => {
+          const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+          return re.test(v);
+        },
+        message: (props) => `${props.value} is not a valid email`,
       },
-      message: (props) => `${props.value} is not a valid email`,
+    },
+    password: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (v) => {
+          const re =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+          return re.test(v);
+        },
+        message: (props) =>
+          "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
+      },
+    },
+    role: {
+      type: String,
+      enum: Object.keys(ROLES),
+      default: "user",
     },
   },
-  password: {
-    type: String,
-    required: true,
-    validate: {
-      validator: (v) => {
-        const re =
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        return re.test(v);
-      },
-      message: (props) =>
-        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character",
-    },
-  },
-  role: {
-    type: String,
-    enum: Object.keys(ROLES),
-    default: "user",
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.methods.isPasswordMatch = async function (password) {
   const user = this;

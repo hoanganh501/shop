@@ -1,3 +1,4 @@
 import User from "./User.model.js";
+import Token from "./Token.model.js";
 
-export { User };
+export { User, Token };

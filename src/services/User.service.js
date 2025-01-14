@@ -44,12 +44,7 @@ const GetUserByEmail = async (email) => {
  */
 
 const UpdateUser = async (id, user) => {
-  const user_info = await GetUserById(id);
-  if (!user_info) {
-    return new Error("User not found");
-  }
-  user_info.set(user);
-  return await user_info.save();
+  return await User.findByIdAndUpdate(id, user, { new: true });
 };
 
 /**

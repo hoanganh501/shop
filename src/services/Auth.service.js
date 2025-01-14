@@ -6,7 +6,6 @@ const LoginUser = async (email, password) => {
   if (!user) {
     throw new Error("User not found");
   }
-  console.log(user);
 
   const isPasswordMatch = await user.isPasswordMatch(password);
   if (!isPasswordMatch) {
@@ -16,8 +15,6 @@ const LoginUser = async (email, password) => {
 };
 
 const RegisterUser = async (user) => {
-  console.log(user); //{ name: 'anh', email: 'lasw@gmail.com', password: '@Anh12346' }
-
   return await UserService.CreateUser(user);
 };
 

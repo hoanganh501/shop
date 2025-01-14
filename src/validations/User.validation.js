@@ -19,7 +19,6 @@ const UpdateUser = {
   body: Joi.object().keys({
     name: Joi.string(),
     email: Joi.string().email(),
-    password: Joi.string(),
   }),
 };
 
