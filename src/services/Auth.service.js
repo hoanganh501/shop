@@ -1,4 +1,4 @@
-import { User } from "../models/index.js";
+import { Token, User } from "../models/index.js";
 import UserService from "./User.service.js";
 
 const LoginUser = async (email, password) => {
@@ -14,8 +14,12 @@ const LoginUser = async (email, password) => {
   return user;
 };
 
-const RegisterUser = async (user) => {
-  return await UserService.CreateUser(user);
+const LogoutUser = async (refreshToken) => {
+  const token = await Token.deleteOne({ token: refreshToken });
+  if (!token.ok === 1) {
+    throw new Error("logout fail");
+  }
+  return true;
 };
 
-export default { LoginUser, RegisterUser };
+export default { LoginUser, LogoutUser };
