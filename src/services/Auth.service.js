@@ -1,4 +1,6 @@
+import tokenTypes from "../config/token.js";
 import { Token, User } from "../models/index.js";
+import TokenService from "./Token.service.js";
 import UserService from "./User.service.js";
 
 const LoginUser = async (email, password) => {
@@ -22,4 +24,17 @@ const LogoutUser = async (refreshToken) => {
   return true;
 };
 
-export default { LoginUser, LogoutUser };
+const refreshToken = async (refreshToken) => {
+  const tokendoc = await TokenService.TokenDocument(
+    refreshToken,
+    tokenTypes.REFRESH
+  );
+  const user = await UserService.GetUserById(tokendoc.user);
+  if (!user) {
+    throw new Error("Token not found");
+  }
+  await Token.deleteOne({ token: refreshToken });
+  return TokenService.generateAuthTokens(user);
+};
+
+export default { LoginUser, LogoutUser, refreshToken };

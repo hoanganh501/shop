@@ -69,7 +69,27 @@ const saveToken = async (token, userId, refreshTokenExpires, type) => {
   });
 };
 
+const verifyToken = (token) => {
+  return jwt.verify(token, env.jwt.jwt_secret);
+};
+
+const TokenDocument = async (token, type) => {
+  const palyload = await verifyToken(token);
+  const tokendoc = await Token.findOne({
+    token,
+    type: type,
+    user: palyload.sub,
+  });
+
+  if (!tokendoc) {
+    throw new Error("Token not found");
+  }
+  return tokendoc;
+};
+
 export default {
   generateToken,
   generateAuthTokens,
+  verifyToken,
+  TokenDocument,
 };

@@ -13,4 +13,9 @@ router.post(
 );
 
 router.post("/logout", validate(AuthValidation.Logout), AuthController.logout);
+router.post(
+  "/refresh-token",
+  validate(AuthValidation.RefreshToken),
+  AuthController.refreshToken
+);
 export default router;

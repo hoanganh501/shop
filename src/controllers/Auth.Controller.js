@@ -20,4 +20,9 @@ const logout = async (req, res) => {
   });
 };
 
-export default { Login, Register, logout };
+const refreshToken = async (req, res) => {
+  const token = await AuthService.refreshToken(req.body.refreshToken);
+  res.status(200).send(token);
+};
+
+export default { Login, Register, logout, refreshToken };

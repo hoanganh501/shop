@@ -1,21 +1,26 @@
 const ROLES = {
   admin: [
-    "view:comments",
-    "create:comments",
-    "update:comments",
-    "delete:comments",
+    "view:products",
+    "create:products",
+    "update:products",
+    "delete:products",
+
+    "view:users",
+    "create:users",
+    "update:users",
+    "delete:users",
+
+    "view:brands",
+    "create:brands",
+    "update:brands",
+    "delete:brands",
+
+    "view:categories",
+    "create:categories",
+    "update:categories",
+    "delete:categories",
   ],
-  user: ["view:", "create:"],
+  user: ["view:products"],
 };
-
-function hasPermission(user, permission) {
-  const rolePermissions = ROLES[user.role];
-  if (!rolePermissions) {
-    throw new Error(`Role "${user.role}" không tồn tại.`);
-  }
-  return rolePermissions.includes(permission);
-}
-
-export { hasPermission };
 
 export default ROLES;
