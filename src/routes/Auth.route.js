@@ -2,6 +2,7 @@ import express from "express";
 import { AuthController } from "../controllers/index.js";
 import { AuthValidation } from "../validations/index.js";
 import validate from "../middlewares/validate.js";
+import auth from "../middlewares/auth.js";
 const router = express.Router();
 
 router.post("/login", validate(AuthValidation.Login), AuthController.Login);

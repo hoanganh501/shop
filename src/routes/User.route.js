@@ -15,8 +15,20 @@ router
 
 router
   .route("/:id")
-  .get(validate(UserValidation.GetUserById), UserController.GetUserById)
-  .patch(validate(UserValidation.UpdateUser), UserController.UpdateUser)
-  .delete(validate(UserValidation.DeleteUser), UserController.DeleteUser);
+  .get(
+    auth("view:users"),
+    validate(UserValidation.GetUserById),
+    UserController.GetUserById
+  )
+  .patch(
+    auth("update:users"),
+    validate(UserValidation.UpdateUser),
+    UserController.UpdateUser
+  )
+  .delete(
+    auth("delete:users"),
+    validate(UserValidation.DeleteUser),
+    UserController.DeleteUser
+  );
 
 export default router;

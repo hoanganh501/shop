@@ -20,7 +20,7 @@ const ROLES = {
     "update:categories",
     "delete:categories",
   ],
-  user: ["view:products"],
+  user: ["view:products", "view:users", "view:brands", "view:categories"],
 };
 
 export default ROLES;
